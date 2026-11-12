@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node server.mjs",
+    "demo": "node demo.mjs",
     "test": "node --test",
     "verify": "node --test && node --no-opt --test",
     "smoke": "node test/smoke.mjs"

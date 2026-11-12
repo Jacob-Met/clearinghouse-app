@@ -2,6 +2,22 @@
 
 Change the plan. Keep everyone's promises visible.
 
+## Try the simulated demo
+
+```sh
+npm run demo        # or: node demo.mjs
+```
+
+Open <http://127.0.0.1:4173> (set `PORT` to use another port). No PayPal keys, no local model and no network are needed; a "Simulated demo: no real PayPal call" badge stays in the corner.
+
+1. Choose **Try the ticket example** (three people, $220), then **Propose a change** and set Ben's spending limit to `80.00`.
+2. Open **Explore another split**: the request is already filled in. Choose **Explore with AI**, check the model's reading, then **Copy AI split into my editable draft** and **Create next revision**.
+3. Under **Limits & approvals**, record each person's agreement.
+4. In **Settle your shares**, create the payer links, open Ben's **Approve in PayPal** link and press **Approve** on the "Simulated PayPal approval" page.
+5. Back on the tab, press **Refresh payments**, then **Capture $80.00**. The tab shows "PayPal verified $80.00 captured for Ben" and what is left to collect.
+
+What is simulated: the PayPal Sandbox calls (token, create order, get order, capture) are answered in-process by a small fake, and the AI answer is a fixed reading of the example request. Refunds are not simulated. The real PayPal Sandbox and local-model setup is described below.
+
 Clearinghouse is a group tab for people buying something together: tickets, a trip, a shared gift. It keeps each person's exact share, each person's agreement and each PayPal payment tied to one numbered version of the plan, so when the plan changes nobody is held to a version they never saw.
 
 It is for the person who ends up organising: the one who fronts the tickets and then chases everyone.
