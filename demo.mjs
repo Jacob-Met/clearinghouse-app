@@ -18,7 +18,7 @@ const state = mkdtempSync(path.join(os.tmpdir(), "clearinghouse-demo-"));
 // Replace the whole environment the app reads: fake credentials, fake model endpoint, throwaway state.
 for (const key of Object.keys(process.env)) if (/^(PAYPAL_|CLEARINGHOUSE_)/.test(key)) Reflect.deleteProperty(process.env, key);
 Object.assign(process.env, {
-  PORT: String(port), PAYPAL_SANDBOX_CLIENT_ID: "SIMULATED", PAYPAL_SANDBOX_CLIENT_SECRET: "SIMULATED",
+  PORT: String(port), CLEARINGHOUSE_CASES_DEMO: "1", PAYPAL_SANDBOX_CLIENT_ID: "SIMULATED", PAYPAL_SANDBOX_CLIENT_SECRET: "SIMULATED",
   CLEARINGHOUSE_AI_BASE_URL: "http://127.0.0.1:1/v1", CLEARINGHOUSE_AI_MODEL: "simulated-canned-answer",
   CLEARINGHOUSE_PAYPAL_STATE_PATH: path.join(state, "paypal.json"), CLEARINGHOUSE_PARTICIPATION_PATH: path.join(state, "participation.json")
 });

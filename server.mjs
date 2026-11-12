@@ -7,6 +7,7 @@ import { createSandboxCheckout, CheckoutError } from "./app/paypal-sandbox.mjs";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { handleCases } from "./server/cases.mjs";
 import { handleAiSuggestion, handleAiStatus, handleAiCalculation } from "./server/ai-suggest.mjs";
 
 const root = dirname(fileURLToPath(import.meta.url));
@@ -245,6 +246,7 @@ async function handleRequest(request, response, invitationOnly = false) {
     } catch(error) {json(response,error.status||400,{message:error.status?error.message:"Unable to process this shared response."});}
     return;
   }
+  if (await handleCases(request, response, url)) return;
   if (url.pathname === "/api/ai/status") return handleAiStatus(request, response);
   if (url.pathname === "/api/ai/suggest") return handleAiSuggestion(request, response);
   if (url.pathname === "/api/ai/calculate") return handleAiCalculation(request, response);
