@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CLEARINGHOUSE — Group Change Desk</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body id="app-shell" data-view="welcome">
+  <header class="hero">
+    <div class="masthead">
+      <div class="masthead-identity">CLEARINGHOUSE</div>
+      <span class="masthead-context">PayPal Sandbox</span>
+    </div>
+  </header>
+  <main>
+    <section id="hosted-plans" class="panel hosted-plans" aria-labelledby="hosted-plans-heading" hidden>
+      <div class="section-heading"><h2 id="hosted-plans-heading" tabindex="-1">Shared groups</h2><button id="refresh-hosted-plans" type="button">Refresh</button></div>
+      <div id="hosted-plan-views" class="hosted-plan-views" role="group" aria-label="Shared group view" hidden>
+        <button id="show-active-groups" type="button" aria-pressed="true">Active</button>
+        <button id="show-archived-groups" type="button" aria-pressed="false">Archived</button>
+      </div>
+      <div id="hosted-plans-find" class="hosted-plans-find" hidden>
+        <label for="find-hosted-plan">Find a group
+          <input id="find-hosted-plan" type="search" autocomplete="off" placeholder="Group name or person" aria-controls="hosted-plans-list" aria-describedby="hosted-plans-count">
+        </label>
+        <button id="clear-hosted-plan-search" type="button" disabled>Clear</button>
+      </div>
+      <p id="hosted-plans-count" class="fine" role="status" aria-live="polite"></p>
+      <p id="hosted-plans-status" class="fine" role="status" aria-live="polite"></p>
+      <ul id="hosted-plans-list"></ul>
+    </section>
+    <section id="browser-recovery" class="browser-recovery" aria-label="Browser recovery" hidden>
+      <div class="recovery-line">
+        <p id="recovery-status" role="status" aria-live="polite">Keep unfinished edits and recorded history on this browser.</p>
+        <div class="actions">
+          <button id="save-work-file" type="button">Save work to file</button>
+          <button id="enable-recovery" type="button">Keep on this browser</button>
+          <button id="copy-recovery" type="button" hidden>Save a separate copy</button>
+          <details id="recovery-options" hidden>
+            <summary>Browser copy</summary>
+            <div class="recovery-options-body">
+              <p class="fine">Copies are not encrypted or shared online. Anyone using this browser profile can open them. Save work to a file to carry unfinished edits and kept options. The file does not include hosted access.</p>
+              <div class="actions">
+                <button id="stop-recovery" type="button" hidden>Stop saving</button>
+                <button id="remove-recovery" type="button" hidden>Remove browser copy</button>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+      <p id="recovery-privacy" class="fine">Browser copies are not encrypted or shared online. Anyone using this browser profile can open them. Save work to a file to carry unfinished edits and kept options. The file does not include hosted access.</p>
+      <div id="saved-work" hidden><h2>Saved in this browser</h2><ul id="saved-work-list"></ul></div>
+    </section>
+    <section id="welcome" class="panel welcome-desk" aria-labelledby="welcome-title">
+      <h1 id="welcome-title">What are you buying together?</h1>
+
+      <section class="welcome-sample" aria-label="Ticket example preview">
+        <header><h2>Friday, together.</h2><small>Ticket example</small></header>
+        <div class="sample-total">$220.00</div>
+        <div class="split-bar" aria-hidden="true"><div class="split-segment"></div><div class="split-segment"></div><div class="split-segment"></div></div>
+        <div class="sample-people"><span>Asha <strong>$60</strong></span><span>Ben <strong>$100</strong></span><span>Chen <strong>$60</strong></span></div>
+      </section>
+      <form id="start-plan-form" class="start-plan-form">
+        <label for="new-plan-name">Group or purchase name
+          <input id="new-plan-name" name="plan-name" maxlength="200" required autocomplete="off" placeholder="Saturday print workshop">
+        </label>
+        <button id="start-new" class="primary" type="submit">Build this plan</button>
+      </form>
+      <div class="welcome-existing">
+        <button id="open-file" type="button">Open saved work or plan</button>
+        <button id="start-example" type="button">Try the ticket example</button>
+        <input id="file-input" type="file" accept=".json,application/json" hidden>
+      </div>
+
+    </section>
+
+    <div id="workspace" hidden>
+
+
+      <section class="panel ledger-plan">
+        <div class="section-heading">
+          <div><p class="eyebrow">The group tab</p><h2 id="plan-title" tabindex="-1">Plan</h2></div>
+          <div class="actions"><button id="invite-group" type="button" class="primary" aria-controls="recipient-panel">Invite someone</button><button id="begin-change">Propose a change</button><details class="plan-tools"><summary>Plan options</summary><div><button id="export-plan">Export history</button><button id="replace-file">Open another plan</button><button id="new-plan" type="button">New plan</button></div></details></div>
+        </div>
+        <div id="group-payment-status" class="group-payment-status" hidden><div><strong id="group-payment-label"></strong><span id="group-payment-scope"></span></div><a href="#sandbox-checkout">View payments</a></div>
+      <section class="status-grid" aria-label="Current proposal summary">
+        <div><span>Group total</span><strong id="total-label">—</strong></div>
+        <div><span>Revision</span><strong id="revision-label">—</strong></div>
+        <div><span>Agreements</span><strong id="approval-label">—</strong></div>
+
+      </section>
+        <div id="group-split" class="group-split" aria-label="Group split"></div>
+        <p id="agreement-status" class="agreement"></p>
+        <section id="group-replies" class="group-replies" aria-labelledby="group-replies-heading" hidden>
+          <div class="group-replies-heading"><h3 id="group-replies-heading">Group replies</h3><button id="refresh-responses" type="button">Check replies</button></div>
+          <p id="group-reply-status" class="fine" role="status" aria-live="polite"></p>
+          <div id="shared-responses"></div>
+        </section>
+        <div id="response-preview" class="response-preview" aria-live="polite" hidden></div>
+        <section id="payment-history-panel" class="payment-history-panel" aria-labelledby="payment-history-heading" hidden>
+          <div class="payment-history-heading">
+            <h3 id="payment-history-heading">Earlier payments</h3>
+            <button id="refresh-payment-history" type="button">Check earlier payments</button>
+          </div>
+          <p id="payment-history-status" class="payment-history-status" role="status" aria-live="polite"></p>
+          <ol id="payment-history-rows" class="prior-payment-list"></ol>
+          <details id="other-payment-orders" hidden>
+            <summary id="other-payment-orders-label">Other earlier orders</summary>
+            <ol id="other-payment-order-rows" class="prior-payment-list"></ol>
+          </details>
+        </section>
+
+        <details class="people-details"><summary>Limits &amp; approvals</summary>
+        <div id="current-obligations" class="table-wrap" role="region" aria-label="Per-person obligations" tabindex="0">
+          <table>
+            <caption>Everyone’s share</caption>
+            <thead><tr><th scope="col">Participant</th><th scope="col">Amount</th><th scope="col">Limit</th><th scope="col">Budget status</th><th scope="col">Recorded declaration</th><th scope="col">Action</th></tr></thead>
+            <tbody id="member-results"></tbody>
+          </table>
+        </div>
+        </details>
+        <details>
+          <summary>How each item is allocated</summary>
+          <div id="item-explanations"></div>
+          <p class="fine">Each item total is quantity × unit price. Explicit nonnegative weights are apportioned in integer cents by largest remainder; tied remainder cents go to the lowest stable ASCII member ID. Limits never trigger hidden redistribution.</p>
+        </details>
+      </section>
+
+      <section class="panel conversation-panel">
+        <h2>The conversation</h2>
+
+        <ol id="history-list" class="history"></ol>
+      </section>
+
+      <section id="change-panel" class="panel" hidden>
+        <div class="section-heading">
+          <div><p id="draft-context" class="eyebrow">Draft based on <span id="draft-base"></span></p><h2 id="draft-heading">Review a change</h2></div>
+          <button id="cancel-change" type="button">Discard draft</button>
+        </div>
+        <div id="error-summary" class="error" role="alert" hidden tabindex="-1"></div>
+        <form id="change-form">
+          <div class="draft-fields">
+            <label id="draft-name-field" hidden>Group or purchase name
+              <input id="draft-project-name" maxlength="200" autocomplete="off">
+            </label>
+            <label id="change-note-field">Change note <input id="change-note" maxlength="2000" required value="Updated group plan"></label>
+            <fieldset class="people-fields"><legend>People and spending limits</legend><p class="split-help">Add a spending limit when the person provides one. You can plan without it; agreement waits until every limit is confirmed.</p><div id="member-editors"></div><button id="add-member" type="button">Add person</button></fieldset>
+            <fieldset class="purchase-fields"><legend>Purchases and shares</legend>
+              <p class="split-help">Use 1 share each for an equal split, 2 for twice as much, or 0 when someone is not included.</p>
+              <div id="item-editors"></div><button id="add-item" type="button">Add purchase</button>
+            </fieldset>
+          </div>
+          <aside class="draft-review" aria-labelledby="preview-title">
+            <section id="change-preview">
+              <p id="draft-copy-status" class="draft-copy-status" role="status" hidden></p>
+              <h3 id="preview-title" tabindex="-1">Review this split</h3>
+              <div id="draft-split" class="group-split" aria-label="Proposed group split"></div>
+              <div id="preview-body" aria-live="polite"></div>
+              <button id="save-draft" class="primary" type="submit">Create next revision</button>
+              <p id="save-draft-note" class="fine">Everyone reviews the new plan.</p>
+
+            </section>
+          </aside>
+          <details class="draft-alternatives">
+            <summary>Explore another split</summary>
+            <div class="local-split-heading"><h3>Fit everyone’s spending limits</h3><div class="actions"><button id="find-budget-option" class="primary" type="button">Find a split within limits</button><button id="choose-split" type="button">Choose sharing rules</button></div></div>
+            <div id="budget-option" role="status" aria-live="polite" class="budget-option"></div>
+            <div id="manual-split" class="manual-split" aria-live="polite"></div>
+            <section class="ai-negotiation" aria-labelledby="ai-title">
+              <h3 id="ai-title">Add a different request</h3>
+              <label for="ai-goal">What needs to change?</label>
+              <textarea id="ai-goal" rows="3" maxlength="1200" placeholder="One person can cover more of the room, but everyone needs to stay within their limit."></textarea>
+              <div class="actions"><button id="ask-ai" type="button" disabled>Explore with AI</button><span class="fine" id="ai-availability" role="status" aria-live="polite">Checking optional AI configuration…</span></div>
+              <div id="ai-result" role="status" aria-live="polite"></div>
+            </section>
+          </details>
+        </form>
+      </section>
+
+      <section id="scenario-comparison" class="panel scenario-comparison" aria-labelledby="scenario-heading" hidden>
+        <h2 id="scenario-heading" tabindex="-1">Compare purchase options</h2>
+        <div id="scenario-table" class="scenario-scroll" tabindex="0" role="region" aria-label="Purchase options comparison"></div>
+        <details id="scenario-pin-controls" class="scenario-keep">
+          <summary>Keep this draft as another option</summary>
+          <div class="actions">
+            <label for="scenario-name">Option name<input id="scenario-name" maxlength="80" placeholder="Smaller venue, shared coach"></label>
+            <button id="pin-scenario" type="button">Keep this draft for comparison</button>
+          </div>
+        </details>
+      </section>
+
+      <section id="latest-change-panel" class="panel" aria-labelledby="latest-change-title" hidden>
+        <div class="section-heading"><div><h2 id="latest-change-title">How has this agreement changed?</h2></div><div class="actions"><label class="comparison-select" for="compare-from-revision">Compare from <select id="compare-from-revision" aria-label="Historical revision to compare with current"></select></label><button type="button" id="save-change-brief">Save comparison</button></div></div>
+        <p id="latest-change-heading" class="change-heading"></p>
+        <p id="latest-change-summary"></p>
+        <h3>People and budgets</h3><ul id="latest-change-members" class="change-list"></ul>
+        <details><summary>What changed in the items?</summary><ul id="latest-change-items" class="change-list"></ul></details>
+      </section>
+
+      <div class="handoff-flow" aria-label="Participant review and optional payer handoff">
+      <section id="recipient-panel" class="panel recipient-panel" aria-labelledby="recipient-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">One person / one exact revision</p>
+            <h2 id="recipient-title">Invite a response</h2>
+          </div>
+          <button id="open-response" type="button">Open returned response</button>
+          <input id="response-input" type="file" accept=".json,application/json" hidden>
+        </div>
+
+
+        <div class="recipient-controls">
+          <label for="recipient-select">Participant
+            <select id="recipient-select" aria-label="Participant for personal review"></select>
+          </label>
+          <button type="button" id="share-review" class="primary">Create private invitation</button><button type="button" id="download-review">Download personal review</button>
+        </div>
+        <div id="shared-invitation" hidden><label>Private invitation<input id="invitation-url" type="text" readonly></label><div class="actions"><button type="button" id="copy-invitation" class="primary">Copy invitation link</button><a id="invitation-open" target="_blank" rel="noreferrer">Open participant review</a></div><p id="invitation-copy-status" role="status" aria-live="polite"></p></div>
+        <p id="shared-status" role="status" aria-live="polite"></p>
+        <div id="invitation-offline" class="invitation-offline" hidden>
+          <strong>Send this review as a file</strong>
+          <p>The group link is unavailable. Your participant can open a personal review offline and send their answer back as a file.</p>
+          <a id="offline-review" class="primary" download>Download personal review</a>
+        </div>
+      </section>
+
+      <section id="sandbox-checkout" class="panel checkout-station" aria-labelledby="checkout-heading">
+        <div class="section-heading"><div><p class="eyebrow">The group’s payments</p><h2 id="checkout-heading">Settle your shares</h2></div></div>
+
+
+        <div class="payment-observation"><span id="settlement-kind">Payments</span><strong id="settlement-label" aria-live="polite">Not checked</strong><small id="settlement-scope">Payer orders not inspected</small></div>
+        <div id="changed-payment-review" class="changed-payment-review" hidden></div>
+        <button id="prepare-checkout" class="primary" disabled>Create payer links</button>
+        <p id="checkout-status" role="status" aria-live="polite">Record all declarations to prepare sandbox payment requests.</p>
+        <ul id="checkout-links" class="checkout-links" aria-label="PayPal sandbox payer links"></ul>
+        <div class="settlement-actions">
+          <button id="refresh-settlement" type="button" disabled>Refresh payments</button>
+          
+        </div>
+        <details id="settlement-ledger" class="settlement-ledger" aria-label="Current revision PayPal reconciliation" hidden></details>
+      </section>
+
+      </div>
+
+
+    </div>
+    <p id="live-status" class="sr-only" aria-live="polite"></p>
+  </main>
+  <script type="module" src="/app.mjs"></script>
+</body>
+</html>
